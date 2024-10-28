@@ -9,5 +9,4 @@ function mostrarImpares(inicio, fin) {
   }
 }
 
-mostrarImpares(0, 20);
-
+mostrarImpares(0, 100);
