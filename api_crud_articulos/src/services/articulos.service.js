@@ -48,12 +48,12 @@ class ArticulosService {
   }
 
   async delete(id) {
-    const articuloDelete = await models.Articulos.findByPk(id);
-    if (!articuloDelete) {
+    const articulo = await models.Articulos.findByPk(id);
+    if (!articulo) {
       throw new Error('Articulo no encontrado');
     }
-    await articuloDelete.destroy();
-    return id;
+    await articulo.update({ estado_activacion: false });
+    return articulo;
   }
 }
 
