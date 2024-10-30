@@ -9,8 +9,12 @@ class ArticulosService {
     return newArticulos;
   }
 
-  async find({ nombre, exact }) {
+  async find({ id, nombre, exact, estado_activacion }) {
     const where = {};
+    if (id) {
+      where.id = id;
+    }
+
     if (nombre) {
       if (exact) {
         where.nombre = nombre;
@@ -18,6 +22,10 @@ class ArticulosService {
         where.nombre = { [Op.iLike]: `%${nombre}%` };
       }
     }
+    if (estado_activacion !== undefined) {
+      where.estado_activacion = estado_activacion === 'true';
+    }
+
     const articulos = await models.Articulos.findAll({ where });
     return articulos;
   }
