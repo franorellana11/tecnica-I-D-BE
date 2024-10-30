@@ -41,8 +41,13 @@ class ArticulosService {
   async update(id, changes) {
     const articulo = await models.Articulos.findByPk(id);
     if (!articulo) {
-      throw new Error('Articulo no encontrado');
+      throw new Error('Artículo no encontrado');
     }
+
+    if (!changes.nombre || !changes.marca) {
+      throw new Error('Los campos "nombre" y "marca" son requeridos.');
+    }
+
     const rta = await articulo.update(changes);
     return rta;
   }
