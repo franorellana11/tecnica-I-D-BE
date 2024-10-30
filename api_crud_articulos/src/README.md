@@ -15,3 +15,17 @@ Este proyecto es una API RESTful para la gestión de artículos en una tienda. P
 
 - Node.js y npm instalados en tu máquina.
 - Docker y Docker Compose instalados.
+
+## Instrucciones de Ejecución
+
+1. **Subir contenedores**:  
+   ```bash
+   docker-compose up
+
+2. **Iniciar servidor de desarrollo**:  
+   ```bash
+   npm run dev
+
+3. **Conectar a la base de datos PostgreSQL**:  
+   ```bash
+   psql -h DB_HOST -p DB_PORT -U DB_USER -d DB_NAME
