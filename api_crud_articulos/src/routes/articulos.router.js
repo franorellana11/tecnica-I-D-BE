@@ -7,7 +7,11 @@ const service = new ArticulosService();
 
 router.get('/', async (req, res, next) => {
   try {
-    const articulos = await service.find();
+    const { nombre, exact } = req.query;
+    const articulos = await service.find({
+      nombre,
+      exact,
+    });
     res.json(articulos);
   } catch (error) {
     next(error);
