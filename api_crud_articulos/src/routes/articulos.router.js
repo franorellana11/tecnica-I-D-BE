@@ -51,11 +51,14 @@ router.patch('/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/', async (req, res, next) => {
   try {
-    const { id } = req.params;
-    await service.delete(id);
-    res.status(201).json({ id });
+    const { id } = req.query;
+    if (!id) {
+      return res.status(400).json({ message: 'ID requerido' });
+    }
+    const articulo = await service.delete(id);
+    res.status(200).json({ id: articulo.id, message: 'Articulo desactivado' });
   } catch (error) {
     next(error);
   }
