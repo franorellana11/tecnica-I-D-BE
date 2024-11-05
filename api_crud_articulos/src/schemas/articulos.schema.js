@@ -14,6 +14,7 @@ const createArticuloSchema = Joi.object({
 });
 
 const updateArticuloSchema = Joi.object({
+  id: id.required(),
   nombre: nombre,
   marca: marca,
   estado_activacion: estado_activacion,
