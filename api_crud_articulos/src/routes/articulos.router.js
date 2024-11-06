@@ -1,6 +1,12 @@
 const express = require('express');
 
 const ArticulosService = require('./../services/articulos.service');
+const {
+  createArticuloSchema,
+  updateArticuloSchema,
+  getArticuloSchema,
+} = require('./../schemas/articulos.schema');
+const validatorHandler = require('./../middlewares/validator.handler');
 
 const router = express.Router();
 const service = new ArticulosService();
@@ -20,36 +26,49 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const articulos = await service.findOne(id);
-    res.json(articulos);
-  } catch (error) {
-    next(error);
+router.get(
+  '/:id',
+  validatorHandler(getArticuloSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const articulos = await service.findOne(id);
+      res.json(articulos);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.post('/', async (req, res, next) => {
-  try {
-    const body = req.body;
-    const nuevoArticulo = await service.create(body);
-    res.status(201).json(nuevoArticulo);
-  } catch (error) {
-    next(error);
+router.post(
+  '/',
+  validatorHandler(createArticuloSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const nuevoArticulo = await service.create(body);
+      res.status(201).json(nuevoArticulo);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.patch('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const body = req.body;
-    const articulo = await service.update(id, body);
-    res.json(articulo);
-  } catch (error) {
-    next(error);
+router.patch(
+  '/:id',
+  validatorHandler(getArticuloSchema, 'params'),
+  validatorHandler(updateArticuloSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const body = req.body;
+      const articulo = await service.update(id, body);
+      res.json(articulo);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.delete('/', async (req, res, next) => {
   try {
