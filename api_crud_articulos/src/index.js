@@ -7,6 +7,7 @@ const {
   errorHandler,
   boomErrorHandler,
 } = require('../src/middlewares/error.handler');
+const setupSwagger = require('./swagger');
 
 app.get('/', (req, res) => {
   res.send('Hola, mundo!');
@@ -19,8 +20,11 @@ app.use(logErrors);
 app.use(errorHandler)
 app.use(boomErrorHandler);
 
+setupSwagger(app);
 
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`Documentación en http://localhost:${PORT}/api-docs`);
+
 });
