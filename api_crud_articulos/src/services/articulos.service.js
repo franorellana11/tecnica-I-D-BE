@@ -27,6 +27,11 @@ class ArticulosService {
     }
 
     const articulos = await models.Articulos.findAll({ where });
+
+    if (id && articulos.length === 0) {
+      throw new Error(`Articulo id:${id}, no encontrado.`);
+    }
+
     return articulos;
   }
 
