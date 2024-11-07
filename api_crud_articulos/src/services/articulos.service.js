@@ -11,6 +11,7 @@ class ArticulosService {
 
   async find({ id, nombre, exact, estado_activacion }) {
     const where = {};
+
     if (id) {
       where.id = id;
     }
@@ -22,6 +23,7 @@ class ArticulosService {
         where.nombre = { [Op.iLike]: `%${nombre}%` };
       }
     }
+
     if (estado_activacion !== undefined) {
       where.estado_activacion = estado_activacion === 'true';
     }
@@ -29,7 +31,17 @@ class ArticulosService {
     const articulos = await models.Articulos.findAll({ where });
 
     if (id && articulos.length === 0) {
-      throw new Error(`Articulo id:${id}, no encontrado.`);
+      throw new Error(`Articulo con id: ${id} no encontrado.`);
+    }
+
+    if (nombre && articulos.length === 0) {
+      throw new Error(`No se encontraron articulos con el nombre: ${nombre}`);
+    }
+
+    if (estado_activacion !== undefined && articulos.length === 0) {
+      throw new Error(
+        `No se encontraron articulos con el estado de activacion: ${estado_activacion}`
+      );
     }
 
     return articulos;
