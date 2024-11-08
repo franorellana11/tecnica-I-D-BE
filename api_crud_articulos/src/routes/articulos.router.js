@@ -138,10 +138,9 @@ router.get(
  *                 example: "Nombre del artículo"
  *               descripcion:
  *                 type: string
- *                 example: "Descripción detallada del artículo"
- *               marca:
- *                 type: string
- *                 example: "Marca del artículo"
+ *               fecha_modificacion:
+ *                 type: date
+ *                 example: "Fecha de modifciacion del articulo"
  *               estado_activacion:
  *                 type: boolean
  *                 example: true
@@ -200,6 +199,48 @@ router.patch(
   }
 );
 
+/**
+ * @swagger
+ * /api/articulos:
+ *   delete:
+ *     summary: Desactiva un artículo
+ *     description: Este endpoint permite desactivar un artículo existente.
+ *     tags:
+ *       - Articulos
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del artículo a desactivar
+ *     responses:
+ *       200:
+ *         description: Artículo desactivado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: "123"
+ *                 message:
+ *                   type: string
+ *                   example: "Articulo desactivado"
+ *       400:
+ *         description: Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "ID requerido"
+ *       500:
+ *         description: Error interno del servidor
+ */
 router.delete('/', async (req, res, next) => {
   try {
     const { id } = req.query;
